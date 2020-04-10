@@ -55,7 +55,7 @@ public class PGCTerrain : MonoBehaviour
 
     float calcHeight(int x, int y) {
         float xCoord = (float)x / mapWidth * scale + xOffset;
-        float yCoord = (float)y / mapHeight * scale+ yOffset;
+        float yCoord = (float)y / mapHeight * scale + yOffset;
 
         return Mathf.PerlinNoise(xCoord, yCoord);
     }
