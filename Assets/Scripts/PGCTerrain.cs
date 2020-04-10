@@ -14,7 +14,16 @@ public class PGCTerrain : MonoBehaviour
         terrain.terrainData = GenerateTerrain(terrain.terrainData);
     }
     TerrainData GenerateTerrain(TerrainData terrainData) {
+        terrainData.heightmapResolution = mapWidth + 1;
         terrainData.size = new Vector3(mapWidth, mapDepth, mapHeight);
+        float[,] heightmap = new float[mapWidth, mapHeight];
+        for (int y = 0; y < mapHeight; y++)
+        {
+            for (int x = 0; x < mapWidth; x++) {
+                heightmap[x, y] = Random.Range(0.0f, 1.0f);
+            }
+        }
+        terrainData.SetHeights(0, 0, heightmap);
         return terrainData;
     }
 
