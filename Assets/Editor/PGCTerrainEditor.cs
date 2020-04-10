@@ -15,7 +15,10 @@ public class PGCTerrainEditor : Editor
             Debug.Log("Random terrain");
         }
         if (GUILayout.Button("Single Perlin"))
+        {
             Debug.Log("Single Perlin");
+            PGCTerrain.SinglePerlin();
+        }
         GUILayout.EndHorizontal();
     }
 }
