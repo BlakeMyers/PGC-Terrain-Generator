@@ -4,21 +4,42 @@ using UnityEditor;
 [CustomEditor(typeof(PGCTerrain))]
 public class PGCTerrainEditor : Editor
 {
+    bool showPer = false;
+    bool showMPO = false;
     public override void OnInspectorGUI() {
-        base.OnInspectorGUI();
         PGCTerrain PGCTerrain = (PGCTerrain)target;
-
-        GUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Map Options");
+        PGCTerrain.mapWidth = EditorGUILayout.IntField("Map Width",PGCTerrain.mapWidth);
+        PGCTerrain.mapHeight = EditorGUILayout.IntField("Map Height", PGCTerrain.mapHeight);
+        PGCTerrain.mapDepth = EditorGUILayout.IntField("Map Depth", PGCTerrain.mapDepth);
         if (GUILayout.Button("Random Terrain"))
         {
-            PGCTerrain.ResizeTerrain();
+            PGCTerrain.RandomTerrain();
             Debug.Log("Random terrain");
         }
-        if (GUILayout.Button("Single Perlin"))
+
+        showPer = EditorGUILayout.Foldout(showPer, "Perlin Noise Options");
+        if (showPer)
         {
-            Debug.Log("Single Perlin");
-            PGCTerrain.SinglePerlin();
+            PGCTerrain.scale = EditorGUILayout.Slider("Scale", PGCTerrain.scale, 0.001f, 500);
+            PGCTerrain.Offsets = EditorGUILayout.Vector2Field("Offsets", PGCTerrain.Offsets);
+            if (GUILayout.Button("Single Perlin"))
+            {
+                Debug.Log("Single Perlin");
+                PGCTerrain.SinglePerlin();
+            }
+            showMPO = EditorGUILayout.Foldout(showMPO, "Multiple Perlin Options");
+            if (showMPO)
+            {
+                PGCTerrain.seed = EditorGUILayout.IntField("Map Seed", PGCTerrain.seed);
+                PGCTerrain.numOctaves = EditorGUILayout.IntSlider("Octaves", PGCTerrain.numOctaves, 0, 12);
+                PGCTerrain.persistance = EditorGUILayout.Slider("Persistance", PGCTerrain.persistance, 0.0f, 1);
+                PGCTerrain.lacunarity = EditorGUILayout.Slider("Lacunarity", PGCTerrain.lacunarity, 0.0f, 1);
+                if (GUILayout.Button("Multiple Perlin"))
+                {
+                    PGCTerrain.MultiplePerlin();
+                }
+            }
         }
-        GUILayout.EndHorizontal();
     }
 }
